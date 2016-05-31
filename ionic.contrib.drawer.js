@@ -282,27 +282,32 @@ angular.module('ionic.contrib.drawer', ['ionic'])
   return {
     restrict: 'E',
     controller: 'drawerCtrl',
-    scope: {
-      side: '=side'
-    },
     link: function($scope, $element, $attr, ctrl) {
       $element.addClass($attr.side);
-      
-      $scope.openDrawer = function() {
+
+      var drawerCtrl = {
+        openDrawer: openDrawer,
+        closeDrawer: closeDrawer,
+        toggleDrawer: toggleDrawer
+      };
+
+      ($scope.vm) ? angular.merge($scope.vm, drawerCtrl) : angular.merge($scope, drawerCtrl);
+
+      function openDrawer() {
         ctrl.open();
-      };
-      
-      $scope.closeDrawer = function() {
+      }
+
+      function closeDrawer() {
         ctrl.close();
-      };
-      
-      $scope.toggleDrawer = function() {
+      }
+
+      function toggleDrawer() {
         if (ctrl.isOpen()) {
           ctrl.close();
         } else {
           ctrl.open();
         }
-      };
+      }
     }
   }
 }]);
